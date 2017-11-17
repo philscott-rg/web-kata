@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import './ProductMenu.css'
 
 class ProductItem extends Component {
   render() {
     const name = this.props.product.name
     return <div className='product-item'>
-      <div className='name'>{name}</div>
+      <div className='name'>
+        <Link to={'/products/' + name}>{name}</Link>
+      </div>
     </div>
   }
 }

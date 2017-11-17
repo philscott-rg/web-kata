@@ -13,8 +13,9 @@ class ProductContainer extends Component {
   }
 
   render() {    
+    const p = this.state.products.find(p => p.name === this.props.match.params.productName);
     return <div className='product-container'>
-      Product container
+      <Product product={p} />
     </div>
   }
 }
