@@ -27,7 +27,8 @@ export default {
         {
             name: 'SQL Clone', 
             description : 'Create SQL Server database copies in an instant',
-            new: true
+            new: true,
+            free: true
         },
         {
             name: 'SQL Backup',

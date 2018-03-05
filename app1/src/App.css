@@ -12,3 +12,23 @@
 .App-intro {
   font-size: large;
 }
+
+.free--true h3:after, .new--true h3:after {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.new--true h3:after {
+    content: 'NEW';
+    color: blue;
+}
+
+.free--true h3:after {
+    content: 'FREE';
+    color: green;
+}
+
+.new--true.free--true h3:after {
+    content: 'NEW AND FREE!!';
+    color: blueviolet;
+}
