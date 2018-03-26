@@ -10,8 +10,10 @@ class App extends Component {
     super(props)
     this.state= {products: data.products}
 
-    this.handleAddProduct = this.handleAddProduct.bind(this)
-    this.removeProduct = this.removeProduct.bind(this)
+    this.handleAddProduct = this.handleAddProduct.bind(this);
+    this.removeProduct = this.removeProduct.bind(this);
+    this.setProductFilter = this.setProductFilter.bind(this);
+    this.getFilteredProducts = this.getFilteredProducts.bind(this);
   }
 
   handleAddProduct(event){
@@ -31,12 +33,31 @@ class App extends Component {
     this.setState({products: newProducts})
   }
 
+  setProductFilter(event){
+    this.setState({productFilterValue: event.target.value});
+  }
+
+  getFilteredProducts(){
+    console.log(this.state.productFilterValue);
+    if (this.state.productFilterValue && this.state.productFilterValue !== '') {
+      let regex = new RegExp(this.state.productFilterValue, 'i');
+      return _.filter(this.state.products, p => p.name.match(regex));
+    } else {
+      return this.state.products;
+    }
+  }
+
   render() {
     return <div className="App">
       <div className="App-header">
         <h2>Kata 3- Filter, show and hide objects</h2>
       </div>
-      <div className='filter-products'>Filter products here...</div>
+      <div className='filter-products'>
+        <form onSubmit={(event) => event.preventDefault() }>
+          <label htmlFor="filter-products">Filter products</label>
+          <input type="text" id="filter-products" onChange={this.setProductFilter}/>
+        </form>
+      </div>
       <div className='add-product'>
         <form onSubmit={this.handleAddProduct}>
           <label>product name:
@@ -49,7 +70,7 @@ class App extends Component {
         </form>
       </div>
       <div className='products-container'>
-        <Products products={this.state.products} removeProduct={this.removeProduct} />
+        <Products products={this.getFilteredProducts()} removeProduct={this.removeProduct} />
       </div>
     </div>
   }

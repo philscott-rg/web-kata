@@ -20,15 +20,23 @@
 
 .product .name{
     font-weight: bold;
-    font-size: 14pt;
+    font-size: 2rem;
     display: flex;
     flex-direction: row;
 }
 
 .product .desc{
-    font-size: 10pt;
+    font-size: 1.5rem;
+    line-height: 3rem;
+}
+
+
+.product .actions {
+    font-weight: bold;
+    font-size: 3rem;
+    cursor: pointer;
 }
 
 .product .actions .remove{
-    cursor: pointer;
+    vertical-align: top;
 }
