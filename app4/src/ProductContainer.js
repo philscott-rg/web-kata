@@ -12,9 +12,19 @@ class ProductContainer extends Component {
     }
   }
 
+  getProductDescription(name){
+    const filteredProducts = _.filter(this.state.products, p => p.name === name);
+    if (filteredProducts.length > 0) {
+      return filteredProducts[0].description;
+    } else {
+      return 'something went wrong';
+    }
+  }
+
   render() {    
     return <div className='product-container'>
-      Product container
+      <h1>{this.props.match.params.name}</h1>
+      <p>{this.getProductDescription(this.props.match.params.name)}</p>
     </div>
   }
 }
