@@ -9,68 +9,28 @@ import ProductContainer from './ProductContainer.js'
 import './App.css'
 
 import { fetchWebServerVersion } from './modules/versions'
+import { fetchProducts, onProductAdd } from './modules/products'
 
 class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      products:[]
-    }
-    this.fetchProducts()
+    this.props.fetchProducts()
 
     this.props.fetchWebServerVersion()
 
     this.handleAddProduct = this.handleAddProduct.bind(this)
   }
 
-  fetchProducts(){
-    fetch('/api/products/get',{
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(r => {
-      return r.json()
-    }).then(json => {
-      this.setState({products: json})
-    })
-  }
+  handleAddProduct(event) {
+    event.preventDefault();
 
-  onProductRemove(productName){
-    fetch('/api/products/delete/'+productName, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
-    }).then(r => {
-      return r.json()
-    }).then(json => {
-      this.setState({products: json})
-    })
-  }
-
-  handleAddProduct(event){
-    event.preventDefault()
     const newProduct = {
       name: event.target.name.value,
       description: event.target.description.value
-    }
+    };
 
-    fetch('/api/products/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(newProduct)
-    }).then(r => {
-      return r.json()
-    }).then(json => {
-      this.setState({products: json})
-    })
+    this.props.onProductAdd(newProduct);
   }
 
   render() {
@@ -91,11 +51,9 @@ class App extends Component {
         </form>
       </div>
       <div className='products-container'>
-        <ProductMenu
-          products={this.state.products}
-          onProductRemove={n => this.onProductRemove(n)} />
+        <ProductMenu />
         <Route exact path='/products/:productName' component={
-          props => <ProductContainer {...props} products={this.state.products} />
+          props => <ProductContainer {...props} products={this.props.products} />
         } />
       </div>
     </div>
@@ -103,11 +61,14 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  version: state.versions.version
+  version: state.versions.version,
+  products: state.products.products
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchWebServerVersion
+  fetchWebServerVersion,
+  fetchProducts,
+  onProductAdd,
 }, dispatch)
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

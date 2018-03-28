@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import './ProductMenu.css'
 import { Link } from 'react-router-dom'
+import { onProductRemove } from './modules/products'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 class ProductItem extends Component {
 
-  onRemoveItem(productName){
-    this.props.onProductRemove(productName)
-  }
 
   render() {
     const name = this.props.product.name
@@ -16,7 +16,7 @@ class ProductItem extends Component {
         </div>
         <div
           className='product-item-remove'
-          onClick={() => this.onRemoveItem(name)}>x</div>
+          onClick={() => this.props.onProductRemove(name)}>x</div>
     </div>
   }
 }
@@ -34,4 +34,13 @@ class ProductMenu extends Component {
   }
 }
 
-export default ProductMenu
+
+const mapStateToProps = state => ({
+  products: state.products.products
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  onProductRemove
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductMenu)
