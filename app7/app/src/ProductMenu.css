@@ -28,6 +28,6 @@
     flex-direction: row;
 }
 
-.product-item-remove{
+.product-item-remove, .product-item-vote{
     cursor: pointer;
 }
