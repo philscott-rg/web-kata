@@ -5,6 +5,7 @@ import ProductMenu from './ProductMenu';
 import ProductContainer from './ProductContainer';
 import { Product } from './Models/Product';
 import './App.css';
+import { Route } from 'react-router';
 
 interface Props { }
 
@@ -26,7 +27,7 @@ class App extends Component<Props, State> {
         </div>
         <div className='products-container'>
           <ProductMenu products={this.state.products} />
-          <ProductContainer />
+          <Route path='/products/:productName' component={ProductContainer} />
         </div>
       </div>
     );

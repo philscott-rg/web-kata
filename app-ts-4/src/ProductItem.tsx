@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Product } from './Models/Product';
 import './ProductItem.css';
+import { Link } from 'react-router-dom';
 
 interface ProductItemProps {
   product: Product;
@@ -13,7 +14,9 @@ class ProductItem extends Component<ProductItemProps, {}> {
 
     return (
       <div className='product-item'>
-        <div className='name'>{name}</div>
+        <Link to={`/products/${name}`}>
+          <div className='name'>{name}</div>
+        </Link>
       </div>
     );
   }
