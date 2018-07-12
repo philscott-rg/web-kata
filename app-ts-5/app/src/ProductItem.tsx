@@ -6,6 +6,7 @@ import './ProductItem.css';
 
 interface ProductItemProps {
   product: Product;
+  onDelete: (product: Product) => void;
 }
 
 class ProductItem extends Component<ProductItemProps, {}> {
@@ -15,6 +16,10 @@ class ProductItem extends Component<ProductItemProps, {}> {
     return (
       <div className='product-item'>
         <div className='name'><Link to={`/products/${name}`}>{name}</Link></div>
+        <button className='delete' onClick={() => this.props.onDelete(this.props.product)}>
+          X
+        </button>
+
       </div>
     );
   }
