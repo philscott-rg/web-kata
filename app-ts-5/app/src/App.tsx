@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import { GetData } from './data';
+import * as Api from './api';
 import ProductMenu from './ProductMenu';
 import ProductContainer from './ProductContainer';
 import { Product } from './Models/Product';
@@ -18,7 +18,14 @@ class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     // Access the REST API instead of grabbing products from data.ts
-    this.state = { products: GetData() };
+    this.state = { products: [] };
+    this.setProducts = this.setProducts.bind(this);
+
+    Api.getProducts(this.setProducts);
+  }
+
+  setProducts(products: Product[]) {
+    this.setState({ products: products });
   }
 
   render(): JSX.Element {
